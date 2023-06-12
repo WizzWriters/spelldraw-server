@@ -1,0 +1,17 @@
+{
+  "name": "interactive-whiteboard-server",
+  "version": "0.0.1",
+  "description": "Backend for our whiteboard app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2"
+  }
+}
