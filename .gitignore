@@ -124,3 +124,6 @@ dist
 
 # editor settings
 .vscode
+
+# env secrets
+.env.vault
