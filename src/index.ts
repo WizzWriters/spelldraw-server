@@ -67,8 +67,12 @@ io.on('connection', async (socket) => {
     socket.to(data.board_id).emit('position_update', data)
   })
 
-  socket.on('new_shape', (data) => {
-    socket.to(data.board_id).emit('new_shape', data)
+  socket.on('shape_create', (data) => {
+    socket.to(data.board_id).emit('shape_create', data)
+  })
+
+  socket.on('shape_delete', (data) => {
+    socket.to(data.board_id).emit('shape_delete', data)
   })
 
   socket.on('disconnecting', async () => {
