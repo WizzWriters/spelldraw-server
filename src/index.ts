@@ -67,6 +67,10 @@ io.on('connection', async (socket) => {
     socket.to(data.board_id).emit('position_update', data)
   })
 
+  socket.on('new_shape', (data) => {
+    socket.to(data.board_id).emit('new_shape', data)
+  })
+
   socket.on('disconnecting', async () => {
     console.log(`Socket ${socket.id} disconnecting`)
 
