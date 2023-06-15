@@ -64,7 +64,7 @@ io.on('connection', async (socket) => {
   })
 
   socket.on('position_update', (data) => {
-    socket.to(data.board_id).emit('user_position_updated', data)
+    socket.to(data.board_id).emit('position_update', data)
   })
 
   socket.on('disconnecting', async () => {
