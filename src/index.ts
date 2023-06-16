@@ -24,13 +24,11 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.APPLICATION_URL,
-    methods: ['GET', 'POST']
+    origin: '*',
   }
 })
 
 const BOARD_SET = 'boards'
-
 io.on('connection', async (socket) => {
   const userId = crypto.randomUUID()
   console.log(`Socket connected: ${socket.id}. User id: ${userId}`)
