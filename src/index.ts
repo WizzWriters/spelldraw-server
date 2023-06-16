@@ -44,22 +44,35 @@ io.on('connection', async (socket) => {
   })
 
   socket.on('join_board', async (data, callback) => {
-    const boardExists = await redisClient.sIsMember(BOARD_SET, data.board_id)
+    const boardId = data.board_id
+    const boardExists = await redisClient.sIsMember(BOARD_SET, boardId)
     if (!boardExists) {
       callback({ status: -1 })
       return
     }
 
-    socket.join(data.board_id)
-    console.log(`User ${userId} joined the ${data.board_id} board`)
+    socket.join(boardId)
+    console.log(`User ${userId} joined the ${boardId} board`)
 
-    socket.to(data.board_id).emit('user_joined', { board_user_id: userId })
+    const shapes = []
+    const boardSockets = io.of('/').adapter.rooms.get(boardId)
+    if (boardSockets && boardSockets.size > 1) {
+      let chosenSocket = ''
+      for (const boardSocket of boardSockets) {
+        if (boardSocket != socket.id) {
+          chosenSocket = boardSocket
+          break
+        }
+      }
+      socket
+        .to(chosenSocket)
+        .emit('shape_list_share_req', { socket: socket.id })
+    }
+
+    socket.to(boardId).emit('user_joined', { board_user_id: userId })
     callback({
       status: 0,
-      data: {
-        board_id: data.board_id,
-        board_user_id: userId
-      }
+      data: { board_id: boardId, board_user_id: userId, shapes }
     })
   })
 
@@ -73,6 +86,10 @@ io.on('connection', async (socket) => {
 
   socket.on('shape_delete', (data) => {
     socket.to(data.board_id).emit('shape_delete', data)
+  })
+
+  socket.on('shape_list_share_resp', (data) => {
+    socket.to(data.socket).emit('shape_list', data)
   })
 
   socket.on('disconnecting', async () => {
