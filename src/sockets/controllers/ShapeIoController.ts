@@ -9,6 +9,10 @@ export default class ShapeIoController {
     socket.to(data.board_id).emit('shape_delete', data)
   }
 
+  public static update(socket: Socket, data: any) {
+    socket.to(data.board_id).emit('shape_update', data)
+  }
+
   public static listResponse(socket: Socket, data: any) {
     socket.to(data.socket).emit('shape_list', data)
   }
