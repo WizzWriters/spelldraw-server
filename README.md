@@ -4,6 +4,15 @@ Backend for our whiteboard.
 
 ## Project setup
 
+### Setup database
+
+First you need to install `redis` on your device with your system's package menager.
+Then simply run:
+
+```sh
+redis-server --port 9000 --daemonize yes
+```
+
 ### Install node dependencies
 
 ```sh
