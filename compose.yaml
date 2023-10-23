@@ -9,7 +9,8 @@ services:
       - 9000
   server:
     container_name: "spelldraw-server"
-    build: .
+    build:
+      dockerfile: Dockerfile.development
     depends_on:
       - redis
     environment:
