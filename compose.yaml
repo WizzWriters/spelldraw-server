@@ -13,6 +13,10 @@ services:
       context: .
       target: base
     command: npm run dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/dist
     depends_on:
       - redis
     environment:

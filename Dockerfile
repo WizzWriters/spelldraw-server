@@ -9,12 +9,9 @@ LABEL fly_launch_runtime="Node.js"
 # Node.js app lives here
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV=production
-
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
-    apt-get install -y python-is-python3 pkg-config build-essential 
+    apt-get install -y python-is-python3 pkg-config build-essential git
 
 # Install node modules
 COPY --link package-lock.json package.json ./
@@ -25,6 +22,9 @@ COPY --link . .
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
+
+# Set production environment
+ENV NODE_ENV=production
 
 # Build application
 RUN npm run build
