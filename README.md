@@ -22,6 +22,8 @@ Then you can stop the containers with
 docker compose stop
 ```
 
+See [developing tips](https://github.com/WizzWriters/spelldraw-server/wiki/Developing-with-VS-Code-and-Docker) for instructions on how to work with containers in VS Code.
+
 ## Running checks
 
 When using docker this should be done inside the container.
