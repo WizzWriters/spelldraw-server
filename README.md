@@ -2,34 +2,31 @@
 
 Backend for our whiteboard.
 
-## Project setup
+## Project setup with docker
 
-### Setup database
-
-First you need to install `redis` on your device with your system's package menager.
-Then simply run:
+To build and run the server simply execute
 
 ```sh
-redis-server --port 9000 --daemonize yes
+docker compose up
 ```
 
-### Install node dependencies
+or to run in background
 
 ```sh
-npm ci
+docker compose up -d
 ```
 
-### Run with Hot-Reloads for Development
+Then you can stop the containers with
 
 ```sh
-npm run dev
+docker compose stop
 ```
 
-### Type-Check, Compile and Minify for Production
+## Running checks
 
-```sh
-npm run build
-```
+When using docker this should be done inside the container.
+
+### Type check
 
 To perform only type checking you can run:
 ```sh
@@ -61,3 +58,34 @@ npm run format-check
 ```
 
 Please run format, lint and type checks before each commit.
+
+## Manual project setup
+
+### Setup database
+
+First you need to install `redis` on your device with your system's package menager.
+Then simply run:
+
+```sh
+redis-server --port 9000 --daemonize yes
+```
+
+### Install node dependencies
+
+```sh
+npm ci
+```
+
+### Run with Hot-Reloads for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+
