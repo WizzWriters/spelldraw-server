@@ -3,9 +3,15 @@ import BoardService from '../../services/BoardService'
 import User from '../../models/User'
 
 export default class BoardIoController {
-  public static async create(socket: Socket, callback: any) {
+  public static async create(socket: Socket, user: User, callback: any) {
     const boardService = new BoardService()
-    const newBoard = await boardService.create()
+    const newBoard = await boardService.create(user.id)
+
+    if (!newBoard) {
+      callback({ status: 1, data: null })
+      return
+    }
+
     socket.join(newBoard.id)
     callback({ status: 0, data: { id: newBoard.id } })
   }

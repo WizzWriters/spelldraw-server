@@ -5,7 +5,8 @@ import User from '../../models/User'
 function registerBoardEvents(server: Server, socket: Socket, user: User) {
   socket.on(
     'create_board',
-    async (_, callback) => await BoardIoController.create(socket, callback)
+    async (_, callback) =>
+      await BoardIoController.create(socket, user, callback)
   )
 
   socket.on(
