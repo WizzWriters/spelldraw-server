@@ -9,10 +9,15 @@ export default class BoardService {
 
   public async create(userId: crypto.UUID): Promise<Board | null> {
     const newBoard = new Board(userId)
-    let boardId = await this.boardRepository.save(newBoard)
+    const boardId = await this.boardRepository.save(newBoard)
     if (!boardId) return null
     this.logger.debug('Created new board: ', boardId)
     return newBoard
+  }
+
+  public async getBoardById(boardId: crypto.UUID): Promise<Board | null> {
+    const board = await this.boardRepository.getById(boardId)
+    return board
   }
 
   public async addUser(boardId: string, userId: string): Promise<boolean> {

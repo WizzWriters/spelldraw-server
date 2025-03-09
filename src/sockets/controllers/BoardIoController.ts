@@ -27,6 +27,7 @@ export default class BoardIoController {
     const boardService = new BoardService()
     if (!(await boardService.addUser(boardId, user.id))) {
       callback({ status: -1 })
+      return
     }
 
     const roomId = boardId
