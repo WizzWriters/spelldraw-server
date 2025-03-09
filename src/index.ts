@@ -25,6 +25,9 @@ app.get('/', (req, res) => {
   res.send('Hi!')
 })
 
-server.listen(process.env.PORT, () => {
+const serverPort = process.env.PORT
+if (!serverPort) throw new Error('Server port not set')
+
+server.listen(serverPort, () => {
   console.log(`⚡ Server is listening on port ${process.env.PORT}`)
 })

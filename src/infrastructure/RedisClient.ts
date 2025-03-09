@@ -3,6 +3,8 @@ import Logger from 'js-logger'
 
 const logger = Logger.get('RedisClient')
 
+if (!process.env.DATABASE_URL) throw new Error('Redis database URL not set')
+
 const redisClient = createClient({
   url: process.env.DATABASE_URL
 })
