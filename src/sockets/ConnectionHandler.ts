@@ -8,7 +8,12 @@ export class ConnectionHandler {
 
   public static async handleConnection(server: Server, socket: Socket) {
     const userService = new UserService()
-    const user = await userService.create()
+    const user = await userService.create(socket.id)
+
+    if (!user) {
+      ConnectionHandler.logger.error(`Failed to create a new user`)
+      return
+    }
 
     ConnectionHandler.logger.debug(
       `Socket connected: ${socket.id}. User id: ${user.id}`

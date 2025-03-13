@@ -1,3 +1,4 @@
+import Logger from 'js-logger'
 import { Board } from '../../models/Board'
 import { redisClient } from '../RedisClient'
 import crypto from 'crypto'
@@ -5,13 +6,15 @@ import crypto from 'crypto'
 const BOARDS_SET = 'boards'
 
 export class BoardRepository {
+  private logger = Logger.get('BoardRepository')
+
   public async save(board: Board): Promise<string | null> {
     try {
       await redisClient.sAdd(BOARDS_SET, board.id)
       await redisClient.hSet(this.getBoardKey(board.id), { host: board.hostId })
       return board.id
     } catch (err) {
-      console.error('Error while saving the board: ', err)
+      this.logger.error('Error while saving the board: ', err)
       return null
     }
   }
@@ -27,7 +30,7 @@ export class BoardRepository {
       Object.defineProperties(board, { id: { value: boardId } })
       return board
     } catch (err) {
-      console.error('Error while retrieving data: ', err)
+      this.logger.error('Error while retrieving data: ', err)
       return null
     }
   }
@@ -37,7 +40,7 @@ export class BoardRepository {
       await redisClient.sRem(BOARDS_SET, board.id)
       await redisClient.del(this.getBoardKey(board.id))
     } catch (err) {
-      console.error('Error while deleting board: ', err)
+      this.logger.error('Error while deleting board: ', err)
     }
   }
 

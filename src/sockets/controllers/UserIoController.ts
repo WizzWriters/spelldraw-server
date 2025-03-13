@@ -3,6 +3,7 @@ import Logger from 'js-logger'
 import User from '../../models/User'
 import BoardService from '../../services/BoardService'
 import crypto from 'crypto'
+import UserService from '../../services/UserService'
 
 export default class UserIoController {
   private static logger = Logger.get('UserIoController')
@@ -14,6 +15,7 @@ export default class UserIoController {
   public static async disconnect(server: Server, socket: Socket, user: User) {
     UserIoController.logger.debug(`Socket ${socket.id} disconnecting`)
     const boardService = new BoardService()
+    const userService = new UserService()
 
     for (const room of socket.rooms) {
       const board = await boardService.getBoardById(room as crypto.UUID)
@@ -30,5 +32,7 @@ export default class UserIoController {
         socket.to(room).emit('user_left', { board_user_id: user.id })
       }
     }
+
+    await userService.deleteIfExists(user.id)
   }
 }
