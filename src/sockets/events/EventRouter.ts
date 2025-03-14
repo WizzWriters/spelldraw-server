@@ -8,7 +8,7 @@ import { registerUserEvents } from './UserEvents'
 function registerEvents(server: Server, socket: Socket, user: User) {
   registerBoardEvents(server, socket, user)
   registerShapeEvents(socket)
-  registerUserEvents(socket)
+  registerUserEvents(server, socket, user)
 }
 
 export { registerEvents }

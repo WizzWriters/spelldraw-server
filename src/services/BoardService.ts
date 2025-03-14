@@ -1,16 +1,23 @@
 import Logger from 'js-logger'
 import { BoardRepository } from '../infrastructure/repositories/BoardRepository'
 import { Board } from '../models/Board'
+import crypto from 'crypto'
 
 export default class BoardService {
   private logger = Logger.get('BoardService')
   private boardRepository = new BoardRepository()
 
-  public async create(): Promise<Board> {
-    const newBoard = new Board()
-    await this.boardRepository.save(newBoard)
-    this.logger.debug('Created new board: ', newBoard.id)
+  public async create(userId: crypto.UUID): Promise<Board | null> {
+    const newBoard = new Board(userId)
+    const boardId = await this.boardRepository.save(newBoard)
+    if (!boardId) return null
+    this.logger.debug('Created new board: ', boardId)
     return newBoard
+  }
+
+  public async getBoardById(boardId: crypto.UUID): Promise<Board | null> {
+    const board = await this.boardRepository.getById(boardId)
+    return board
   }
 
   public async addUser(boardId: string, userId: string): Promise<boolean> {

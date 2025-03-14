@@ -1,5 +1,4 @@
 import Logger from 'js-logger'
-import BoardService from '../../services/BoardService'
 
 export default class RoomIoController {
   private static logger = Logger.get('RoomController')
@@ -10,8 +9,5 @@ export default class RoomIoController {
 
   public static async delete(room: string) {
     RoomIoController.logger.debug(`Room ${room} deleted`)
-    const boardService = new BoardService()
-    const boardId = room
-    boardService.deleteIfExists(boardId)
   }
 }
