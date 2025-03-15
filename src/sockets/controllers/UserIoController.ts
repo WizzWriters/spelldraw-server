@@ -9,7 +9,7 @@ export default class UserIoController {
   private static logger = Logger.get('UserIoController')
 
   public static updatePosition(socket: Socket, data: any) {
-    socket.to(data.board_id).emit('position_update', data)
+    socket.to(data.board_id).volatile.emit('position_update', data)
   }
 
   public static async disconnect(server: Server, socket: Socket, user: User) {
